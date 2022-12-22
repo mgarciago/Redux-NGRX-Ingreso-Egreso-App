@@ -15,6 +15,8 @@ export class IngresoEgresoService {
 
     const uid = this.authService.user.uid;
 
+    delete ingresoEgreso.uid;
+
     return this.firesotre.doc(`${uid}/ingresos-egresos`)
       .collection('items')
       .add({ ...ingresoEgreso })
@@ -31,5 +33,10 @@ export class IngresoEgresoService {
           ...doc.payload.doc.data() as any
         })))
       )
+  }
+
+  delete(uidItem: string | undefined) {
+    const uid = this.authService.user.uid;
+    return this.firesotre.doc(`${uid}/ingresos-egresos/items/${uidItem}`).delete();
   }
 }
